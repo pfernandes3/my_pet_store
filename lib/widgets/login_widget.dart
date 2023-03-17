@@ -1,8 +1,11 @@
+import 'package:my_pet_store/exceptions/firebase_except.dart';
 import 'package:my_pet_store/imports.dart';
+import 'package:my_pet_store/providers/authenticate_provider.dart';
 import 'package:my_pet_store/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart' as validator;
 
-enum _AuthenticationMode { Login, Register }
+enum AuthenticateMode { Login, Register }
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -16,29 +19,60 @@ class _LoginWidgetState extends State<LoginWidget> {
   final _formKey = GlobalKey<FormState>();
   final _passwordControler = TextEditingController();
   final Map<String, String> _formData = {'email': "", 'senha': ""};
-
-  _AuthenticationMode _authenticationMode = _AuthenticationMode.Login;
+  AuthenticateMode _authenticationMode = AuthenticateMode.Login;
   _switchAuthMode() {
-    if (_authenticationMode == _AuthenticationMode.Login) {
+    if (_authenticationMode == AuthenticateMode.Login) {
       setState(() {
-        _authenticationMode = _AuthenticationMode.Register;
+        _authenticationMode = AuthenticateMode.Register;
       });
     } else {
       setState(() {
-        _authenticationMode = _AuthenticationMode.Login;
+        _authenticationMode = AuthenticateMode.Login;
       });
     }
   }
 
-  submit() {
+  void _showException(message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('OCORREU UM ERRO'),
+        content: Text(message),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Fechar'))
+        ],
+      ),
+    );
+  }
+
+  Future<void> submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     setState(() {
       inLoader = true;
     });
-    Future.delayed(const Duration(seconds: 2))
-        .then((_) => Navigator.of(context).pushNamed(AppRoutes.PRODUCT_SCREEN));
+
+    _formKey.currentState!.save();
+
+    try {
+      if (_authenticationMode == AuthenticateMode.Login) {
+        await Provider.of<AuthenticateProvider>(context, listen: false)
+            .login(_formData['email'], _formData['senha']);
+      } else {
+        await Provider.of<AuthenticateProvider>(context, listen: false)
+            .register(_formData['email'], _formData['senha']);
+      }
+    } on FireBaseException catch (e) {
+      _showException(e.toString());
+    } catch (error) {
+      _showException('Ocorreu um erro inesperado');
+    }
+    setState(() {
+      inLoader = false;
+    });
   }
 
   @override
@@ -48,7 +82,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       elevation: 8.0,
       child: Container(
         padding: const EdgeInsets.all(28.0),
-        height: _authenticationMode == _AuthenticationMode.Login ? 340 : 420,
+        height: _authenticationMode == AuthenticateMode.Login ? 340 : 420,
         width: MediaQuery.of(context).size.width * 0.7,
         child: Form(
             key: _formKey,
@@ -101,7 +135,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 const SizedBox(
                   height: 12.5,
                 ),
-                if (_authenticationMode == _AuthenticationMode.Register)
+                if (_authenticationMode == AuthenticateMode.Register)
                   TextFormField(
                     decoration: InputDecoration(
                         labelText: 'Confirmar Senha',
@@ -129,7 +163,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               )),
                           onPressed: submit,
                           child: Text(
-                            _authenticationMode == _AuthenticationMode.Login
+                            _authenticationMode == AuthenticateMode.Login
                                 ? 'ENTRAR'
                                 : 'REGISTRAR',
                           ),
@@ -144,7 +178,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               Theme.of(context).colorScheme.primary,
                           backgroundColor: Colors.white),
                       child: Text(
-                        _authenticationMode == _AuthenticationMode.Login
+                        _authenticationMode == AuthenticateMode.Login
                             ? 'CADASTRE-SE'
                             : 'VOLTAR PARA LOGIN',
                       )),

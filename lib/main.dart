@@ -1,9 +1,27 @@
+import 'package:my_pet_store/providers/authenticate_provider.dart';
+import 'package:my_pet_store/providers/products_provider.dart';
 import 'package:my_pet_store/utils/app_routes.dart';
+import 'package:my_pet_store/views/login_or_product_screen.dart';
 import 'imports.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
-
-enum _authenticationMode { Login, Register }
+void main() => runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => AuthenticateProvider(),
+          ),
+          ChangeNotifierProxyProvider<AuthenticateProvider, ProductsProvider>(
+            create: (_) => ProductsProvider(null, [], null),
+            update: (context, auth, previous) => ProductsProvider(
+                auth.getToken, previous!.getProducts, auth.idUser),
+          ),
+          
+          
+        ],
+        child: const MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,8 +36,7 @@ class MyApp extends StatelessWidget {
             .copyWith(secondary: Colors.purple),
       ),
       routes: {
-        AppRoutes.LOGIN_HOME: (_) => const LoginScreen(),
-        AppRoutes.PRODUCT_SCREEN: (_) => const ProductsOverViewScreen(),
+        AppRoutes.LOGIN_HOME: (_) => const LoginOrProductScreen(),
       },
     );
   }
