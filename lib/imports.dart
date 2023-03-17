@@ -9,3 +9,4 @@ export 'dart:convert';
 
 export  'package:my_pet_store/views/login_screen.dart';
 export  'package:my_pet_store/widgets/login_widget.dart';
+export 'package:my_pet_store/views/products_screen.dart';
