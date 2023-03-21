@@ -1,7 +1,6 @@
 import 'package:my_pet_store/exceptions/firebase_except.dart';
 import 'package:my_pet_store/imports.dart';
 import 'package:my_pet_store/providers/authenticate_provider.dart';
-import 'package:my_pet_store/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart' as validator;
 
@@ -41,7 +40,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         actions: [
           TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('Fechar'))
+              child: const Text('Fechar'))
         ],
       ),
     );
@@ -82,12 +81,11 @@ class _LoginWidgetState extends State<LoginWidget> {
       elevation: 8.0,
       child: Container(
         padding: const EdgeInsets.all(28.0),
-        height: _authenticationMode == AuthenticateMode.Login ? 340 : 420,
+        height: _authenticationMode == AuthenticateMode.Login ? 370 : 440,
         width: MediaQuery.of(context).size.width * 0.7,
         child: Form(
             key: _formKey,
-            child: ListView(
-              shrinkWrap: true,
+            child: Column(
               children: [
                 TextFormField(
                   validator: (value) {
@@ -100,6 +98,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     return null;
                   },
                   decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.email),
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.primary)),
@@ -113,6 +112,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                   height: 25,
                 ),
                 TextFormField(
+
+                  obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "This field can't be empty";
@@ -123,10 +124,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                     return null;
                   },
                   decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.key),
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.primary)),
                     labelText: 'Digite sua senha',
+                    
                     border: const OutlineInputBorder(),
                   ),
                   onSaved: (newValue) =>
@@ -137,6 +140,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 if (_authenticationMode == AuthenticateMode.Register)
                   TextFormField(
+                    
                     decoration: InputDecoration(
                         labelText: 'Confirmar Senha',
                         enabledBorder: OutlineInputBorder(
@@ -147,10 +151,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                     keyboardType: TextInputType.emailAddress,
                   ),
                 const SizedBox(
-                  height: 12.5,
+                  height: 17.5,
                 ),
                 inLoader
-                    ? const CircularProgressIndicator()
+                    ? Container(child: const CircularProgressIndicator())
                     : SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(

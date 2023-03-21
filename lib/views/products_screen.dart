@@ -1,7 +1,6 @@
 import 'package:my_pet_store/imports.dart';
 import 'package:my_pet_store/widgets/product_grid.dart';
 import 'package:provider/provider.dart';
-
 import '../providers/products_provider.dart';
 
 class ProductsOverViewScreen extends StatefulWidget {
@@ -31,7 +30,11 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pet Store'),
+        centerTitle: true,
+        title: const Text(
+          'Todos os Produtos',
+          style: TextStyle(fontSize: 25),
+        ),
       ),
       body: (const ProductGrid()),
     );

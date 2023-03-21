@@ -22,9 +22,9 @@ class _ProductGridState extends State<ProductGrid> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        childAspectRatio: 3/ 2,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
       ),
       padding: const EdgeInsets.all(20),
       itemCount: loadedProducts.length,
