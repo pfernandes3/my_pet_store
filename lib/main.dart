@@ -1,10 +1,13 @@
 import 'package:my_pet_store/providers/authenticate_provider.dart';
+import 'package:my_pet_store/providers/cart_provider.dart';
 import 'package:my_pet_store/providers/products_provider.dart';
 import 'package:my_pet_store/utils/app_routes.dart';
+import 'package:my_pet_store/views/cart_screen.dart';
 import 'package:my_pet_store/views/login_or_product_screen.dart';
 import 'package:my_pet_store/views/products_detail.dart';
 import 'imports.dart';
 import 'package:provider/provider.dart';
+import 'package:my_pet_store/providers/cart_provider.dart';
 
 void main() => runApp(
       MultiProvider(
@@ -16,6 +19,9 @@ void main() => runApp(
             create: (_) => ProductsProvider(null, [], null),
             update: (context, auth, previous) => ProductsProvider(
                 auth.getToken, previous!.getProducts, auth.idUser),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => Cart(),
           ),
         ],
         child: const MyApp(),
@@ -37,6 +43,7 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.LOGIN_HOME: (_) => const LoginOrProductScreen(),
         AppRoutes.PRODUCT_SCREEN: (_) => ProductDetailScreen(),
+        AppRoutes.CART_ROUTE: (_) => CartScreen(),
       },
     );
   }

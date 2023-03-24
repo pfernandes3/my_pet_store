@@ -4,11 +4,13 @@ import 'package:my_pet_store/providers/authenticate_provider.dart';
 import 'package:my_pet_store/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/cart_provider.dart';
+
 class ProductGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Product product = Provider.of<Product>(context);
-    //final Cart cart = Provider.of<Cart>(context, listen: false);
+    final Cart cart = Provider.of<Cart>(context, listen: false);
     final AuthenticateProvider auth = Provider.of(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -41,7 +43,7 @@ class ProductGridItem extends StatelessWidget {
                       //cart.removeSingleItem(product.id);
                     }),
               ));
-              //cart.addItem(product);
+              cart.addCartItem(product);
             },
           ),
           title: Text(

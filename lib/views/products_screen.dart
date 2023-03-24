@@ -1,8 +1,11 @@
 import 'package:my_pet_store/imports.dart';
 import 'package:my_pet_store/widgets/product_grid.dart';
 import 'package:provider/provider.dart';
+import '../providers/cart_provider.dart';
 import '../providers/products_provider.dart';
-
+import '../utils/app_routes.dart';
+import '../widgets/badge.dart';
+enum FilterOptions { Favorite, All }
 class ProductsOverViewScreen extends StatefulWidget {
   const ProductsOverViewScreen({super.key});
 
@@ -11,7 +14,7 @@ class ProductsOverViewScreen extends StatefulWidget {
 }
 
 class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
-  final bool _showFavoriteOnly = false;
+   bool _showFavoriteOnly = false;
   bool _isLoading = true;
   @override
   void initState() {
@@ -28,15 +31,57 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        
         title: const Text(
-          'Todos os Produtos',
+          'My store',
           style: TextStyle(fontSize: 25),
         ),
+        actions: [
+          PopupMenuButton(
+            onSelected: (FilterOptions selectedValue) {
+              if (selectedValue == FilterOptions.Favorite) {
+                setState(() {
+                  _showFavoriteOnly = true;
+                });
+              } else {
+                setState(() {
+                  _showFavoriteOnly = false;
+                });
+              }
+            },
+            icon: const Icon(Icons.more_vert),
+            itemBuilder: (_) => [
+              const PopupMenuItem(
+                value: FilterOptions.Favorite,
+                child: Text('Somente Favoritos'),
+              ),
+              const PopupMenuItem(
+                value: FilterOptions.All,
+                child: Text('Todos'),
+              ),
+            ],
+          ),
+          Consumer<Cart>(
+            child: IconButton(
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.CART_ROUTE),
+                //
+                icon: const Icon(
+                  Icons.shopping_cart,
+                )),
+            builder: (_, cart, child) => Badge(
+              value: cart.getCartItensCount.toString(),
+              child: child as Widget,
+            ),
+          )
+        ],
       ),
-      body: (const ProductGrid()),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ProductGrid(),
+     
     );
   }
 }

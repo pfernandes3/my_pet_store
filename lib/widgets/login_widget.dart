@@ -45,7 +45,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       ),
     );
   }
-
+  
   Future<void> submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -112,7 +112,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                   height: 25,
                 ),
                 TextFormField(
-
                   obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -129,7 +128,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                         borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.primary)),
                     labelText: 'Digite sua senha',
-                    
                     border: const OutlineInputBorder(),
                   ),
                   onSaved: (newValue) =>
@@ -140,7 +138,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 if (_authenticationMode == AuthenticateMode.Register)
                   TextFormField(
-                    
                     decoration: InputDecoration(
                         labelText: 'Confirmar Senha',
                         enabledBorder: OutlineInputBorder(
