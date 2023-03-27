@@ -4,8 +4,11 @@ import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 import '../providers/products_provider.dart';
 import '../utils/app_routes.dart';
+import '../widgets/CustomDrawer.dart';
 import '../widgets/badge.dart';
+
 enum FilterOptions { Favorite, All }
+
 class ProductsOverViewScreen extends StatefulWidget {
   const ProductsOverViewScreen({super.key});
 
@@ -14,7 +17,7 @@ class ProductsOverViewScreen extends StatefulWidget {
 }
 
 class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
-   bool _showFavoriteOnly = false;
+  bool _showFavoriteOnly = false;
   bool _isLoading = true;
   @override
   void initState() {
@@ -31,9 +34,8 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        
         title: const Text(
           'My store',
           style: TextStyle(fontSize: 25),
@@ -70,6 +72,7 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
                 //
                 icon: const Icon(
                   Icons.shopping_cart,
+                  size: 25,
                 )),
             builder: (_, cart, child) => Badge(
               value: cart.getCartItensCount.toString(),
@@ -80,8 +83,10 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : ProductGrid(),
-     
+          : ProductGrid(
+              showFavoriteOnly: _showFavoriteOnly,
+            ),
+      drawer: const CustomDrawer(),
     );
   }
 }

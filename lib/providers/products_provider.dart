@@ -15,7 +15,7 @@ class ProductsProvider with ChangeNotifier {
 
   ProductsProvider(this._token, this._products, this._idUser);
   List<Product> get getProducts => [..._products];
-
+  List<Product> get getFavoriteProducts => _products.where((element) => element.isFavorite).toList();
   int get getItemCountProducts => _products.length;
 
   Future<void> loadProducts() async {

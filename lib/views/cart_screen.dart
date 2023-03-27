@@ -37,11 +37,8 @@ class CartScreen extends StatelessWidget {
                     'R\$${cart.CartTotalAmount.toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 20),
                   ),
-               
                   backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
-               
-
               ],
             ),
           ),

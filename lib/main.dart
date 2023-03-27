@@ -7,7 +7,7 @@ import 'package:my_pet_store/views/login_or_product_screen.dart';
 import 'package:my_pet_store/views/products_detail.dart';
 import 'imports.dart';
 import 'package:provider/provider.dart';
-import 'package:my_pet_store/providers/cart_provider.dart';
+
 
 void main() => runApp(
       MultiProvider(

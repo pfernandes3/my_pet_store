@@ -10,14 +10,22 @@ class LoginOrProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthenticateProvider auth = Provider.of(context);
-    return FutureBuilder(builder: (context, snapshot) {
-      if(snapshot.connectionState == ConnectionState.waiting){
-        return Center(child: CircularProgressIndicator(),);
-      }else if(snapshot.error != null){
-        return Center(child: Text('OCORREU UM ERRO'),);
-      }else{
-        return auth.getIsAuth ? ProductsOverViewScreen() : LoginScreen();
-      } 
-    },);
+
+    return FutureBuilder(
+      future: auth.tryAutoLogin(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.error != null) {
+          return const Center(
+            child: Text('OCORREU UM ERRO'),
+          );
+        } else {
+          return auth.getIsAuth ? const ProductsOverViewScreen() : const LoginScreen();
+        }
+      },
+    );
   }
 }

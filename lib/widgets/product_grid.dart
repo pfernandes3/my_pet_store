@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import '../providers/products_provider.dart';
 
 class ProductGrid extends StatefulWidget {
-  const ProductGrid({super.key});
-  
+  const ProductGrid({super.key, required this.showFavoriteOnly});
+  final bool showFavoriteOnly;
 
   @override
   State<ProductGrid> createState() => _ProductGridState();
@@ -17,13 +17,14 @@ class ProductGrid extends StatefulWidget {
 class _ProductGridState extends State<ProductGrid> {
   @override
   Widget build(BuildContext context) {
-    final List<Product> loadedProducts =
-        Provider.of<ProductsProvider>(context).getProducts;
+    final List<Product> loadedProducts = widget.showFavoriteOnly
+        ? Provider.of<ProductsProvider>(context).getFavoriteProducts
+        : Provider.of<ProductsProvider>(context).getProducts;
 //final List<Product> loadedProducts=  Provider.of(context);
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 3/ 2,
+        childAspectRatio: 3 / 2,
         crossAxisSpacing: 5,
         mainAxisSpacing: 5,
       ),
