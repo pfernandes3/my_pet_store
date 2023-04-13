@@ -4,6 +4,7 @@ import 'package:my_pet_store/imports.dart';
 import 'package:my_pet_store/providers/products_provider.dart';
 import 'package:my_pet_store/utils/app_routes.dart';
 import 'package:my_pet_store/widgets/CustomDrawer.dart';
+import 'package:my_pet_store/widgets/productItem.dart';
 import 'package:provider/provider.dart';
 
 class ProductStorageScreen extends StatelessWidget {
@@ -20,21 +21,21 @@ class ProductStorageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Gerenciamento de Produtos'),
+        title: const Text('Gerenciamento de Produtos'),
         actions: [
           IconButton(
             onPressed: () =>
                 Navigator.of(context).pushNamed(AppRoutes.PRODUCT_STORAGE),
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
-      drawer: CustomDrawer(),
+      drawer: const CustomDrawer(),
       body: RefreshIndicator(
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: ListView.separated(
-              itemBuilder: (context, index) => Text('Olá'),
+              itemBuilder: (context, index) => ProductItem(product: productItens[index]),
               separatorBuilder: (_, __) => const Divider(),
               itemCount: loadedProducts.getItemCountProducts),
         ),
