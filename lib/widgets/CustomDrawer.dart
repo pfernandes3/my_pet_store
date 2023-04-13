@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:my_pet_store/imports.dart';
 import 'package:my_pet_store/providers/authenticate_provider.dart';
 import 'package:my_pet_store/utils/app_routes.dart';
@@ -37,7 +35,7 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.edit),
             title: const Text('Gerenciar Produtos'),
             onTap: () => Navigator.of(context)
-                .pushReplacementNamed(AppRoutes.PRODUCTS_SETTINGS),
+                .pushReplacementNamed(AppRoutes.PRODUCT_STORAGE_SCREEN),
           ),
           const Divider(),
           ListTile(

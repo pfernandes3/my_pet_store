@@ -6,6 +6,8 @@ import 'package:my_pet_store/utils/app_routes.dart';
 import 'package:my_pet_store/views/cart_screen.dart';
 import 'package:my_pet_store/views/login_or_product_screen.dart';
 import 'package:my_pet_store/views/order_screen.dart';
+import 'package:my_pet_store/views/product_form_screen.dart';
+import 'package:my_pet_store/views/product_storage_screen.dart';
 import 'package:my_pet_store/views/products_detail.dart';
 import 'imports.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +54,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.PRODUCT_SCREEN: (_) => const ProductDetailScreen(),
         AppRoutes.CART_ROUTE: (_) => const CartScreen(),
         AppRoutes.ORDERS_ROUTE : (_) => const OrderScreen(),
+        AppRoutes.PRODUCT_STORAGE_SCREEN : (_) => ProductStorageScreen(),
+        AppRoutes.PRODUCT_STORAGE: (_) => ProductFormScreen()
       },
     );
   }

@@ -5,4 +5,6 @@ class AppRoutes {
   static const HOME_SCREEN = "/home-screen";
   static const CART_ROUTE =  '/cart-screen';
   static const ORDERS_ROUTE = '/orders-screen';
+  static const PRODUCT_STORAGE = '/product-storage-screen';
+  static const PRODUCT_STORAGE_SCREEN = '/prod-storage-screen';
 }
