@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:my_pet_store/imports.dart';
 import 'package:http/http.dart' as http;
 import '../models/pet_products.dart';
@@ -15,21 +17,22 @@ class ProductsProvider with ChangeNotifier {
 
   ProductsProvider(this._token, this._products, this._idUser);
   List<Product> get getProducts => [..._products];
-  List<Product> get getFavoriteProducts => _products.where((element) => element.isFavorite).toList();
+  List<Product> get getFavoriteProducts =>
+      _products.where((element) => element.isFavorite).toList();
   int get getItemCountProducts => _products.length;
 
   Future<void> loadProducts() async {
-      final response = await http.get(Uri.parse('$base_url.json?auth=$_token'));
-    final favResponse = await http.get(Uri.parse('$fav_Url/$_idUser.json?auth=$_token'));
+    final response = await http.get(Uri.parse('$base_url.json?auth=$_token'));
+    final favResponse =
+        await http.get(Uri.parse('$fav_Url/$_idUser.json?auth=$_token'));
     final favMap = jsonDecode(favResponse.body);
 
     Map<String, dynamic>? data = json.decode(response.body);
-  _products.clear();
+    _products.clear();
     if (data != null) {
-     
       print(data);
       data.forEach((productId, productData) {
-         final isFavorite = favMap == null ? false : favMap[productId] ?? false;
+        final isFavorite = favMap == null ? false : favMap[productId] ?? false;
         _products.add(Product(
           id: productId,
           title: productData['title'],
@@ -44,5 +47,48 @@ class ProductsProvider with ChangeNotifier {
     notifyListeners();
 
     return Future.value();
+  }
+
+  Future<void> insertProducts(Product product) async {
+    final response = await http.post(Uri.parse('$base_url.json?auth=$_token'),
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'imageUrl': product.imageUrl
+        }));
+    notifyListeners();
+  }
+
+  Future<void> updateProducts(Product product) async {
+    final index = _products.indexWhere((element) => element.id == product.id);
+    if (index > 0) {
+      await http.patch(Uri.parse('$base_url/${product.id}.json?auth=$_token'),
+          body: json.encode({
+            'title': product.title,
+            'description': product.description,
+            'price': product.price,
+            'imageUrl': product.imageUrl,
+          }));
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteProduct(String productID) async {
+    final index = _products.indexWhere((element) => element.id == productID);
+    if (index > 0) {
+      final product = _products[index];
+      _products.remove(product);
+      notifyListeners();
+
+      final response = await http
+          .delete(Uri.parse('$base_url/${product.id}.json?auth=$_token'));
+      if (response.statusCode >= 400) {
+        print('Erro detectado');
+        _products.insert(index, product);
+        notifyListeners();
+        throw HttpException('Ocorreu um erro na exclusão do produto');
+      }
+    }
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_pet_store/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 import '../models/pet_products.dart';
-
+import '../providers/products_provider.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({super.key, required this.product});
@@ -56,12 +57,12 @@ class ProductItem extends StatelessWidget {
                 ).then((value) async {
                   if (value) {
                     try {
-                      
-                      // await Provider.of<ProductsProvider>(context,
-                      //         listen: false)
-                      //     .deleteProduct(product.id!);
+                      await Provider.of<ProductsProvider>(context,
+                              listen: false)
+                          .deleteProduct(product.id!);
                     } catch (e) {
-                       scaffold.showSnackBar(SnackBar(content: Text(e.toString())));
+                      scaffold
+                          .showSnackBar(SnackBar(content: Text(e.toString())));
                       // await showDialog<void>(
                       //     context: context,
                       //     builder: (ctx) => AlertDialog(

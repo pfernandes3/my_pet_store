@@ -39,6 +39,19 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     }
   }
 
+  bool isValidateImageUrl(String url) {
+    bool startWithHttp = url.toLowerCase().startsWith('http://');
+    bool startWithHttps = url.toLowerCase().startsWith('https://');
+    bool endsWithPng = url.toLowerCase().endsWith('.png');
+    bool endsWithJpg = url.toLowerCase().endsWith('.jpg');
+    bool endsWithJpeg = url.toLowerCase().endsWith('.jpeg');
+    return (startWithHttp ||
+        startWithHttps ||
+        endsWithJpeg ||
+        endsWithJpg ||
+        endsWithPng);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,13 +87,17 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                   onsaved: (value) => _formData['title'] = value as String,
                   textinputaction: TextInputAction.next,
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 Custom_Form_Field(
                   label: const Text('Preço'),
                   icon: const Icon(Icons.monetization_on),
                   initialValue: _formData['price'].toString(),
                   validator: (value) {
-                    if (value!.trim().isEmpty || double.tryParse(value) == null || double.tryParse(value)! <= 0) { 
+                    if (value!.trim().isEmpty ||
+                        double.tryParse(value) == null ||
+                        double.tryParse(value)! <= 0) {
                       return 'Informe um valor válido';
                     }
                     return null;
@@ -88,13 +105,17 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                   onsaved: (value) => _formData['price'] = double.parse(value),
                   textinputaction: TextInputAction.next,
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 Custom_Form_Field(
                   label: const Text('Preço'),
                   icon: const Icon(Icons.monetization_on),
                   initialValue: _formData['price'].toString(),
                   validator: (value) {
-                    if (value!.trim().isEmpty || double.tryParse(value) == null || double.tryParse(value)! <= 0) { 
+                    if (value!.trim().isEmpty ||
+                        double.tryParse(value) == null ||
+                        double.tryParse(value)! <= 0) {
                       return 'Informe um valor válido';
                     }
                     return null;
@@ -102,6 +123,41 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                   onsaved: (value) => _formData['price'] = double.parse(value),
                   textinputaction: TextInputAction.next,
                 ),
+                Custom_Form_Field(
+                  label: const Text('Descrição'),
+                  icon: const Icon(Icons.monetization_on),
+                  initialValue: _formData['description'],
+                  validator: (value) {
+                    if (value!.trim().isEmpty) {
+                      return 'Informe uma descrição válida';
+                    }
+                    return null;
+                  },
+                  onsaved: (value) =>
+                      _formData['description'] = value as String,
+                  textinputaction: TextInputAction.next,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(child: TextFormField(
+                      validator: (value) {
+                        if (value!.trim().isEmpty ||
+                            !isValidateImageUrl(value)) {
+                          return 'Informe uma Url válida';
+                        }
+                        return null;
+                      },
+
+                      decoration: const InputDecoration(
+                        labelText: 'Url da Imagem'
+                      ),
+                      keyboardType: TextInputType.url,
+                      textInputAction: TextInputAction.done,
+                      
+                    ))
+                  ],
+                )
               ],
             )),
       ),
