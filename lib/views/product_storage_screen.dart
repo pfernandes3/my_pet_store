@@ -4,6 +4,7 @@ import 'package:my_pet_store/utils/app_routes.dart';
 import 'package:my_pet_store/widgets/CustomDrawer.dart';
 import 'package:my_pet_store/widgets/productItem.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../generated/l10n.dart';
 
@@ -35,7 +36,7 @@ class _ProductStorageScreenState extends State<ProductStorageScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title:  Text(S.of(context).handleProducts),
+        title:  Text(AppLocalizations.of(context)!.handleProducts),
         actions: [
           IconButton(
             onPressed: () =>

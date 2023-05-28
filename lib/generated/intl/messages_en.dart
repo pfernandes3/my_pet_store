@@ -21,13 +21,5 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "button": MessageLookupByLibrary.simpleMessage("CADASTRE-SE"),
-        "handleProducts":
-            MessageLookupByLibrary.simpleMessage("Product Manager"),
-        "loginInput":
-            MessageLookupByLibrary.simpleMessage("Please enter your login"),
-        "passInput":
-            MessageLookupByLibrary.simpleMessage("Please enter your password")
-      };
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
 }

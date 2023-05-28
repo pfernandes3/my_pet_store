@@ -4,6 +4,7 @@ import 'package:my_pet_store/providers/authenticate_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart' as validator;
 import 'package:my_pet_store/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum AuthenticateMode { Login, Register }
 
@@ -115,7 +116,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.primary)),
-                    labelText: S.of(context).loginInput,
+                    labelText: AppLocalizations.of(context)!.loginInput,
                     border: const OutlineInputBorder(),
                   ),
                   onSaved: (newValue) =>
@@ -140,7 +141,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.primary)),
-                    labelText: S.of(context).passInput,
+                    labelText: AppLocalizations.of(context)!.passInput,
                     border: const OutlineInputBorder(),
                   ),
                   onSaved: (newValue) =>
@@ -193,7 +194,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           backgroundColor: Colors.white),
                       child: Text(
                         _authenticationMode == AuthenticateMode.Login
-                            ? S.of(context).button
+                            ? AppLocalizations.of(context)!.button
                             : 'VOLTAR PARA LOGIN',
                       )),
                 )

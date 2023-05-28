@@ -11,7 +11,7 @@ import 'package:my_pet_store/views/product_storage_screen.dart';
 import 'package:my_pet_store/views/products_detail.dart';
 import 'imports.dart';
 import 'package:provider/provider.dart';
-import 'package:my_pet_store/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 void main() => runApp(
@@ -44,11 +44,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates:  const [
-        
-        S.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,  
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales:  AppLocalizations.supportedLocales,  
       title: 'Pet Store',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

@@ -49,46 +49,6 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
-
-  /// `CADASTRE-SE`
-  String get button {
-    return Intl.message(
-      'CADASTRE-SE',
-      name: 'button',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Please enter your password`
-  String get passInput {
-    return Intl.message(
-      'Please enter your password',
-      name: 'passInput',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Please enter your login`
-  String get loginInput {
-    return Intl.message(
-      'Please enter your login',
-      name: 'loginInput',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Product Manager`
-  String get handleProducts {
-    return Intl.message(
-      'Product Manager',
-      name: 'handleProducts',
-      desc: '',
-      args: [],
-    );
-  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -97,7 +57,6 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
-      Locale.fromSubtags(languageCode: 'pt', countryCode: 'BR'),
     ];
   }
 
