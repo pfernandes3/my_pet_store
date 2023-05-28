@@ -3,6 +3,7 @@ import 'package:my_pet_store/imports.dart';
 import 'package:my_pet_store/providers/authenticate_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart' as validator;
+import 'package:my_pet_store/generated/l10n.dart';
 
 enum AuthenticateMode { Login, Register }
 
@@ -14,6 +15,18 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
+
+  @override
+  void initState() {
+    
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      // S.load(Locale("en"));
+    });
+
+  }
+
   bool inLoader = false;
   final _formKey = GlobalKey<FormState>();
   final _passwordControler = TextEditingController();
@@ -45,7 +58,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       ),
     );
   }
-  
+
   Future<void> submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -102,7 +115,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.primary)),
-                    labelText: 'Digite seu e-mail',
+                    labelText: S.of(context).loginInput,
                     border: const OutlineInputBorder(),
                   ),
                   onSaved: (newValue) =>
@@ -127,7 +140,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.primary)),
-                    labelText: 'Digite sua senha',
+                    labelText: S.of(context).passInput,
                     border: const OutlineInputBorder(),
                   ),
                   onSaved: (newValue) =>
@@ -180,7 +193,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           backgroundColor: Colors.white),
                       child: Text(
                         _authenticationMode == AuthenticateMode.Login
-                            ? 'CADASTRE-SE'
+                            ? S.of(context).button
                             : 'VOLTAR PARA LOGIN',
                       )),
                 )

@@ -2,7 +2,6 @@ import 'package:my_pet_store/imports.dart';
 import 'package:my_pet_store/providers/products_provider.dart';
 import 'package:my_pet_store/widgets/custom_text_form_field.dart';
 import 'package:provider/provider.dart';
-
 import '../models/pet_products.dart';
 
 class ProductFormScreen extends StatefulWidget {
@@ -197,9 +196,9 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                         }
                         return null;
                       },
-                    
-                      decoration:
-                          const InputDecoration(labelText: 'Url da Imagem',prefixIcon: Icon(Icons.image)),
+                      decoration: const InputDecoration(
+                          labelText: 'Url da Imagem',
+                          prefixIcon: Icon(Icons.image)),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
                       controller: _imgController,

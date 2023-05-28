@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:my_pet_store/imports.dart';
 import 'package:my_pet_store/providers/products_provider.dart';
 import 'package:my_pet_store/utils/app_routes.dart';
@@ -7,13 +5,29 @@ import 'package:my_pet_store/widgets/CustomDrawer.dart';
 import 'package:my_pet_store/widgets/productItem.dart';
 import 'package:provider/provider.dart';
 
-class ProductStorageScreen extends StatelessWidget {
+import '../generated/l10n.dart';
+
+class ProductStorageScreen extends StatefulWidget {
+  
   const ProductStorageScreen({super.key});
+
+  @override
+  State<ProductStorageScreen> createState() => _ProductStorageScreenState();
+}
+
+class _ProductStorageScreenState extends State<ProductStorageScreen> {
 
   Future<void> _refreshProducts(BuildContext context) {
     return Provider.of<ProductsProvider>(context, listen: false).loadProducts();
   }
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      S.load(const Locale("en"));
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final loadedProducts = Provider.of<ProductsProvider>(context);
@@ -21,7 +35,7 @@ class ProductStorageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Gerenciamento de Produtos'),
+        title:  Text(S.of(context).handleProducts),
         actions: [
           IconButton(
             onPressed: () =>

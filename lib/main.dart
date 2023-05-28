@@ -11,6 +11,7 @@ import 'package:my_pet_store/views/product_storage_screen.dart';
 import 'package:my_pet_store/views/products_detail.dart';
 import 'imports.dart';
 import 'package:provider/provider.dart';
+import 'package:my_pet_store/generated/l10n.dart';
 
 
 void main() => runApp(
@@ -29,8 +30,8 @@ void main() => runApp(
           ),
           ChangeNotifierProxyProvider<AuthenticateProvider, Orders>(
             update: (context, auth, previous) =>
-                Orders(auth.getToken, previous!.orders,auth.idUser),
-            create: (_) => Orders(null, [],null),
+                Orders(auth.getToken, previous!.orders, auth.idUser),
+            create: (_) => Orders(null, [], null),
           ),
         ],
         child: const MyApp(),
@@ -43,6 +44,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates:  const [
+        
+        S.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,  
       title: 'Pet Store',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -53,9 +59,9 @@ class MyApp extends StatelessWidget {
         AppRoutes.LOGIN_HOME: (_) => const LoginOrProductScreen(),
         AppRoutes.PRODUCT_SCREEN: (_) => const ProductDetailScreen(),
         AppRoutes.CART_ROUTE: (_) => const CartScreen(),
-        AppRoutes.ORDERS_ROUTE : (_) => const OrderScreen(),
-        AppRoutes.PRODUCT_STORAGE_SCREEN : (_) => ProductStorageScreen(),
-        AppRoutes.PRODUCT_STORAGE: (_) => ProductFormScreen()
+        AppRoutes.ORDERS_ROUTE: (_) => const OrderScreen(),
+        AppRoutes.PRODUCT_STORAGE_SCREEN: (_) => const ProductStorageScreen(),
+        AppRoutes.PRODUCT_STORAGE: (_) => const ProductFormScreen()
       },
     );
   }
